@@ -1,0 +1,40 @@
+[app]
+name = "reels-bot"
+primary_region = "cdg"
+
+[build]
+
+[env]
+PORT = "3000"
+PYTHONUNBUFFERED = "1"
+BOT_DATA_DIR = "/app/data"
+
+[[services]]
+internal_port = 3000
+protocol = "tcp"
+
+[[services.ports]]
+port = 80
+handlers = ["http"]
+
+[[services.ports]]
+port = 443
+handlers = ["tls", "http"]
+
+[services.concurrency]
+hard_limit = 25
+soft_limit = 20
+type = "connections"
+
+[[services.http_checks]]
+grace_period = "30s"
+interval = "1m"
+method = "GET"
+path = "/"
+protocol = "http"
+restart_limit = 3
+timeout = "10s"
+
+[[mounts]]
+source = "bot_data"
+destination = "/app/data"
