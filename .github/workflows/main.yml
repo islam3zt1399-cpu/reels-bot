@@ -20,7 +20,9 @@ jobs:
           python-version: '3.11'
 
       - name: تثبيت ffmpeg
-        run: sudo apt-get install -y ffmpeg
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y --fix-missing ffmpeg
 
       - name: تثبيت المكتبات
         run: pip install -r requirements.txt
